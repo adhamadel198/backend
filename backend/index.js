@@ -1,12 +1,16 @@
 const express = require('express');
- 
+const dotenv = require('dotenv');
 const cors = require('cors');
+
+const initialdbconnection = require('./config/db');
 
 const articlerouter = require('./routes/article');
 const publishersRouter = require('./routes/publisher')
 const draftsRouter = require('./routes/draft')
 
-
+dotenv.config({
+    path: './config/.env'
+});
 
 const app = express();
 
@@ -22,4 +26,5 @@ app.use('/drafts', draftsRouter);
 
 app.listen(port, async() => {
     console.log(`Now listening on port ${port}`);
+    await initialdbconnection();
 });
