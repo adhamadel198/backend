@@ -1,9 +1,0 @@
-POST https://news-web-app.azurewebsites.net/publishers
-Content-Type: application/json
-
-{
-    "name": "sandy",
-    "password": "123456",
-    "profilePic": "6666666666",
-    "draft": "lhjsblahjb"
-}
