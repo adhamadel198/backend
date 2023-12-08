@@ -14,7 +14,7 @@ const SearchPage = () => {
     if (searchTerm) {
       const fetchArticles = async () => {
         try {
-          const response = await fetch('http://localhost:3001/article/' + encodeURIComponent(searchTerm));
+          const response = await fetch('https://news-web-app.azurewebsites.net/article/' + encodeURIComponent(searchTerm));
           const data = await response.json();
 
           if (!response.ok) {

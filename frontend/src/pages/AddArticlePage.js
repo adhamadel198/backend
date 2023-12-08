@@ -12,7 +12,7 @@ const AddArticlePage = () => {
         
         const fetchArticles = async () =>{
             try {
-                const response = await fetch('http://localhost:3001/article',{
+                const response = await fetch('https://news-web-app.azurewebsites.net/article',{
                     signal: fetchSignal,
                 });
                 const data = await response.json();

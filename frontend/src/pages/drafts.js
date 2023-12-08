@@ -9,7 +9,7 @@ const DraftsPage = () => {
   useEffect(() => {
     const fetchDrafts = async () => {
       try {
-        const response = await fetch('http://localhost:3001/drafts');
+        const response = await fetch('https://news-web-app.azurewebsites.net/drafts');
         const data = await response.json();
 
         if (!response.ok) {
