@@ -1,4 +1,4 @@
-POST http://localhost:3001/drafts
+POST https://news-web-app.azurewebsites.net/drafts
 Content-Type: application/json
 
 {

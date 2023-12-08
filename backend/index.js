@@ -2,8 +2,6 @@ const express = require('express');
  
 const cors = require('cors');
 
-const initialdbconnection = require('./config/db');
-
 const articlerouter = require('./routes/article');
 const publishersRouter = require('./routes/publisher')
 const draftsRouter = require('./routes/draft')
@@ -24,5 +22,4 @@ app.use('/drafts', draftsRouter);
 
 app.listen(port, async() => {
     console.log(`Now listening on port ${port}`);
-    await initialdbconnection();
 });
