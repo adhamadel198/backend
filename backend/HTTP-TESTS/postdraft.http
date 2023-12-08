@@ -1,0 +1,11 @@
+POST https://news-web-app.azurewebsites.net/drafts
+Content-Type: application/json
+
+{
+    "name": "ahmed",
+    "artical": "ay haga",
+    "date": "3/10/2024",
+    "image": "666666666",
+    "articalType": "araaf",
+    "publisherId":"65615d083e76ec0fa9ffc66e"
+}
