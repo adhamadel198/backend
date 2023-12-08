@@ -9,5 +9,4 @@ draftsRouter.get('/:draftId', draftsController.getDrafts);
 
 draftsRouter.route("/updateDraft").put(draftsController.updateDraft);
 
-
 module.exports = draftsRouter;

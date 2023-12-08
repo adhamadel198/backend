@@ -2,7 +2,7 @@ POST http://localhost:3001/drafts
 Content-Type: application/json
 
 {
-    "name": "ahmed",
+    "name": "khaled",
     "artical": "ay haga",
     "date": "3/10/2024",
     "image": "666666666",

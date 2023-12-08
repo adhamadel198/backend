@@ -1,15 +1,5 @@
 const DraftModel= require('../models/draft');
 const {ObjectId} = require('mongoose').Types;
-module.exports.findAllDrafts = async()=>{
-try{
-    const drafts= await DraftModel.find();
-    return drafts;
-
-}catch(err){
-    throw new Error('could not retrieve drafts');
-}
-
-};
 
 module.exports.addNewDraft= async(draftInfo)=>{
     try{
@@ -27,8 +17,6 @@ module.exports.addNewDraft= async(draftInfo)=>{
         throw new Error('could not creat draft.');
     }
 };
-
-
 
 module.exports.findAllDrafts = async (publisherId) => {
     try {

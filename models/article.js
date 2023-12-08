@@ -15,6 +15,11 @@ const articleschema = new Schema({
     },
     imgurl:{
         type:'String'
+    },
+    publisherId: {
+        type: Schema.Types.ObjectId,
+        ref: 'publisher', 
+        required: true
     }
 });
 const articlemodel = model('article',articleschema);

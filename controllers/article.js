@@ -38,7 +38,8 @@ const addNewArticle =async(req,res) => {
         description: req.body.description,
         publishdate: req.body.publishdate,
         keyword: req.body.keyword,
-        imgurl: req.body.imgurl
+        imgurl: req.body.imgurl,
+        publisherId: req.body.publisherId,
     };
     try{
         const createdarticle = await articleservice.addNewArticle(articleinfo);
@@ -76,9 +77,29 @@ const getArticlesByUserTopics = async (req, res) => {
     }
   };
 
+  const updateArticle = async (req, res) => {
+    try {
+        const id = req.query.id;
+        if (id) {
+            const body = req.body;
+
+            articleModel.updateOne({ _id: id }, body, function(err, data) {
+                if (err) throw err;
+                return res.status(201).send({ msg: "Record updated" });
+            });
+        } else {
+            return res.status(401).send({ error: "User not Found...!" });
+        }
+
+    } catch (error) {
+        return res.status(401).send({ error });
+    }
+};
+
 module.exports = {
     findAllArticles,
     getArticlesByKeyword,
     addNewArticle,
-    getArticlesByUserTopics
+    getArticlesByUserTopics,
+    updateArticle
 };
