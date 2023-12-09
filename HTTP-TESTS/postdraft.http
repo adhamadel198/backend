@@ -2,7 +2,7 @@ POST http://localhost:3001/drafts
 Content-Type: application/json
 
 {
-    "description": "fourth draft",
+    "description": "thirddraft",
     "publishdate": "3/10/2024",
     "keyword": "666666666",
     "imgurl": "araaf",

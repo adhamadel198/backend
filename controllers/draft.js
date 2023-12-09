@@ -46,20 +46,19 @@ exports.updateDraft = async (req, res) => {
 
             if (updatedDraft) {
                 await DraftModel.deleteOne({ _id: id });
-                const productInfo = {
-                    name: updatedDraft.name,
-                    artical: updatedDraft.artical,
-                    date: updatedDraft.date,
-                    image: updatedDraft.image,
-                    articalType: updatedDraft.articalType,
+                const articleInfo = {
+                    description: updatedDraft.description,
+                    publishdate: updatedDraft.publishdate,
+                    keyword: updatedDraft.keyword,
+                    imgurl: updatedDraft.imgurl,
                     publisherId: updatedDraft.publisherId
                 };
 
-                const createdProduct = await ArticleModel.create(productInfo);
+                const createdArticle = await ArticleModel.create(articleInfo);
 
                 return res.status(201).send({
                     msg: "Record updated and moved to products",
-                    productId: createdProduct._id
+                    articleId: createdArticle._id
                 });
             } else {
                 return res.status(404).send({ error: "Draft not found" });
