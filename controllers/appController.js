@@ -2,7 +2,7 @@ const bcrypt = require("bcrypt");
 const userModel = require("../models/userModel.js");
 const sendMail = require("../controllers/sendMail.js");
 
-require('dotenv').config();
+require("dotenv").config();
 
 const emailContent = {
   subject: "Custom Subject",
@@ -36,68 +36,43 @@ const register = async (req, res) => {
   try {
     const { username, password, profile, email } = req.body;
 
-    const existUsername = new Promise((resolve, reject) => {
-      userModel.findOne({ username }, function (err, user) {
-        if (err) reject(new Error(err));
-        if (user) reject({ error: "Please use a unique username" });
-        resolve();
-      });
+    // Check if the username is already taken
+    const existingUsername = await userModel.findOne({ username });
+    if (existingUsername) {
+      return res.status(400).json({ error: "Please use a unique username" });
+    }
+
+    // Check if the email is already registered
+    const existingEmail = await userModel.findOne({ email });
+    if (existingEmail) {
+      return res.status(400).json({ error: "Please use a unique email" });
+    }
+
+    console.log("hyyyy");
+
+    console.log("Password:", password);
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+    console.log("Hashed Password:", hashedPassword);
+
+    const user = new userModel({
+      username,
+      password: hashedPassword,
+      profile: profile || "",
+      email,
+      personTypeId: 1,
     });
 
-    const existEmail = new Promise((resolve, reject) => {
-      userModel.findOne({ email }, function (err, user) {
-        if (err) reject(new Error(err));
-        if (user) reject({ error: "Please use a unique email" });
-        resolve();
-      });
-    });
+    const result = await user.save();
 
-    Promise.all([existUsername, existEmail])
-      .then(() => {
-        if (password) {
-          bcrypt
-            .hash(password, 10)
-            .then((hashedPassword) => {
-              const user = new userModel({
-                username,
-                password: hashedPassword,
-                profile: profile || "",
-                email,
-                personTypeId: 1,
-              });
+    await sendMail(email, emailContent);
 
-              user.save()
-                .then((result) => {
-                  res.status(201).send({ msg: "User registered successfully" });
-                })
-                .catch((error) => {
-                  res.status(500).send({ error });
-                });
-
-              sendMail(email, emailContent)
-                .then(() => {
-                  console.log("Email sent successfully");
-                })
-                .catch((error) => {
-                  console.error("Error sending email:", error);
-                });
-            })
-            .catch((error) => {
-              res.status(500).send({
-                error: "Unable to hash password",
-              });
-            });
-        }
-      })
-      .catch((error) => {
-        res.status(500).send({ error });
-      });
+    res.status(201).json({ msg: "User registered successfully" });
   } catch (error) {
-    res.status(500).send({ error });
+    console.error("Error during registration:", error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 };
-
-
 // localhost:3001/api/login
 const login = async (req, res) => {
   const { username, password } = req.body;
@@ -105,7 +80,6 @@ const login = async (req, res) => {
     const user = await userModel.findOne({ username });
 
     if (!user) {
-      toast.error("Username not found");
       return res.status(404).send({ error: "Username not found" });
     }
 
@@ -127,19 +101,20 @@ const login = async (req, res) => {
 };
 
 // localhost:3001/api/user/user1
-const getUser = async (req, res) => {
-  const { username } = req.params;
-  try {
-    if (!username) return res.status(501).send({ error: "Invalid Username" });
-    userModel.findOne({ username }, function (err, user) {
-      if (err) return res.status(500).send({ err });
-      if (!user)
-        return res.status(501).send({ error: "Couldnot find the User" });
 
-      return res.status(201).send(user);
-    });
+const getUserByUsername = async (req, res) => {
+  const { username } = req.params;
+
+  try {
+    const userData = await userModel.findOne({ username });
+    if (!userData) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    return res.status(200).json(userData);
   } catch (error) {
-    return res.status(404).send({ error: "Cannot find User Data" });
+    console.error("Error fetching user data:", error);
+    return res.status(500).json({ error: "Internal Server Error" });
   }
 };
 
@@ -182,12 +157,11 @@ const updateTopics = async (req, res) => {
   }
 };
 
-
 module.exports = {
   verifyUser,
   register,
   login,
-  getUser,
+  getUserByUsername,
   updateUser,
   updateTopics,
 };

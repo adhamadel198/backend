@@ -30,12 +30,11 @@ UserSchema.methods.comparePassword = function (password) {
   return bcrypt.compare(password, this.password);
 };
 
-const modelName = "User";
-const existingModel = mongoose.models[modelName];
+const userModel = mongoose.model("user", UserSchema);
 
-if (existingModel) {
-  module.exports = existingModel;
-} else {
-  const userModel = mongoose.model(modelName, UserSchema);
-  module.exports = userModel;
-}
+UserSchema.methods.generateAuthToken = function () {
+  const token = jwt.sign({ _id: this._id }, process.env.JWT-KEY);
+  return token;
+};
+
+module.exports = userModel;

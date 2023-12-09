@@ -57,16 +57,16 @@ const addNewArticle =async(req,res) => {
 const getArticlesByUserTopics = async (req, res) => {
     try {
       const username = req.params.username;
-  
+      console.log(username);
       
       const user = await userModel.findOne({ username });
   
       if (!user) {
-        return res.status(404).json({ error: 'User not found' });
+        return res.status(404).json({ error: 'User not found 1' });
       }
   
-      const userTopics = user.topic || [];
-  
+      const userTopics = user.topic;
+      console.log(userTopics);
       
       const articles = await articleservice.getArticlesByKeyword({ $in: userTopics });
   
