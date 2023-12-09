@@ -20,10 +20,14 @@ const getArticlesByTopic = async (topics) => {
     return await Article.find({ keyword: { $in: topics } });
 };
 
+const getArticlesByPublisherId = async (publisherId) => {
+    return await Article.find({ publisherId });
+};
 
 module.exports = {
     findAllArticles,
     getArticlesByKeyword,
     addNewArticle,
-    getArticlesByTopic
+    getArticlesByTopic,
+    getArticlesByPublisherId
 };

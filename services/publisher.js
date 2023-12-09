@@ -26,3 +26,17 @@ module.exports.addNewPublisher = async (publisherInfo) => {
         throw new Error('Could not create publisher');
     }
 };
+
+module.exports.deletePublisherById = async (publisherId) => {
+    try {
+        const deletedPublisher = await publisherModel.findByIdAndDelete(publisherId);
+
+        if (!deletedPublisher) {
+            throw new Error('Publisher not found');
+        }
+
+        return deletedPublisher;
+    } catch (err) {
+        throw new Error('Could not delete publisher');
+    }
+};

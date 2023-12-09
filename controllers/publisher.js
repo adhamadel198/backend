@@ -32,3 +32,20 @@ module.exports.postPublisher =async(req,res)=>{
         });
     };
 }
+
+module.exports.deletePublisherById = async (req, res) => {
+    const publisherId = req.params.publisherId;
+
+    try {
+        const deletedPublisher = await publishersService.deletePublisherById(publisherId);
+
+        return res.status(200).send({
+            msg: `Publisher with ID ${publisherId} deleted successfully.`,
+            deletedPublisher
+        });
+    } catch (err) {
+        return res.status(500).send({
+            error: err.message
+        });
+    }
+};

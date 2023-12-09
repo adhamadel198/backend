@@ -96,10 +96,28 @@ const getArticlesByUserTopics = async (req, res) => {
     }
 };
 
+const getArticlesByPublisherId = async (req, res) => {
+    const publisherId = req.params.publisherId;
+
+    try {
+        const articles = await articleservice.getArticlesByPublisherId(publisherId);
+        console.log(articles);
+        return res.status(200).send({
+            articles,
+        });
+    } catch (err) {
+        return res.status(500).send({
+            error: err.message,
+        });
+    }
+};
+
+
 module.exports = {
     findAllArticles,
     getArticlesByKeyword,
     addNewArticle,
     getArticlesByUserTopics,
-    updateArticle
+    updateArticle,
+    getArticlesByPublisherId
 };

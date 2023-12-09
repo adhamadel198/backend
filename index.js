@@ -8,6 +8,7 @@ const articlerouter = require('./routes/article');
 const publishersRouter = require('./routes/publisher');
 const draftsRouter = require('./routes/draft');
 const userRoute = require("./routes/userRoute.js");
+const journalistsRouter = require('./routes/journalist')
 
 dotenv.config({path: './config/.env',});
 
@@ -23,6 +24,7 @@ app.use('/article', articlerouter);
 app.use('/publishers', publishersRouter); 
 app.use('/drafts', draftsRouter);
 app.use("/api", userRoute);
+app.use('/journalists', journalistsRouter);
 
 app.listen(port, async() => {
     console.log(`Now listening on port ${port}`);
