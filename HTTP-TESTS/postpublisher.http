@@ -1,4 +1,4 @@
-POST http://localhost:3001/publishers
+POST https://news-web-app.azurewebsites.net/publishers
 Content-Type: application/json
 
 {

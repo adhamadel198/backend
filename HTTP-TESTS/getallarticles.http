@@ -1,1 +1,1 @@
-GET http://localhost:3001/article
+GET https://news-web-app.azurewebsites.net/article

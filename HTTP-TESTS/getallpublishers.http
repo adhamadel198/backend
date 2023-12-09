@@ -1,1 +1,1 @@
-GET http://localhost:3001/publisher
+GET https://news-web-app.azurewebsites.net/publisher
