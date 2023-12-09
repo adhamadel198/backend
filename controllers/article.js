@@ -1,5 +1,5 @@
 const articleservice = require('../services/article');
-const userModel = require('../models/usermodel');
+const userModel = require('../models/userModel');
 
 const findAllArticles = async (req, res) => {
     try {
