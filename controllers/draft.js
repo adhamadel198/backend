@@ -1,31 +1,18 @@
 const DraftModel = require('../models/draft');
-const draftsService = require('../services/draft');
+const DraftsService = require('../services/draft');
 const ArticleModel = require('../models/article');
-
-exports.getDrafts = async (req,res)=>{
-    try{
-        const drafts = await draftsService.findAllDrafts();
-        res.send({drafts});
-    }catch(err){
-        res.status(500);
-        res.send({
-            error: err
-        });
-    }
-};
 
 exports.postDraft = async (req,res)=>{
     console.log(req.body);
     const draftInfo={
-        name: req.body.name,
-        artical: req.body.artical,
-        date: req.body.date,
-        image: req.body.image,
-        articalType: req.body.articalType,
-        publisherId: req.body.publisherId
+        description: req.body.description,
+        publishdate: req.body.publishdate,
+        keyword: req.body.keyword,
+        imgurl: req.body.imgurl,
+        publisherId: req.body.publisherId,
     };
     try{
-        const createdDraft = await draftsService.addNewDraft(draftInfo);
+        const createdDraft = await DraftsService.addNewDraft(draftInfo);
         return res.status(201).send({
             msg: 'Draft created successfully',
             draftId: createdDraft._id
@@ -40,7 +27,7 @@ exports.postDraft = async (req,res)=>{
 exports.getDrafts = async (req, res) => {
     try {
         const publisherId = req.query.publisherId;
-        const drafts = await draftsService.findAllDrafts(publisherId);
+        const drafts = await DraftsService.findAllDrafts(publisherId);
         res.send({ drafts });
     } catch (err) {
         res.status(500).send({
@@ -81,6 +68,44 @@ exports.updateDraft = async (req, res) => {
             return res.status(401).send({ error: "User not Found...!" });
         }
 
+    } catch (error) {
+        return res.status(500).send({ error: error.message });
+    }
+};
+
+exports.getDraftIdByDescription = async (req, res) => {
+    try {
+      const description = req.params.description;
+  
+      if (!description) {
+        return res.status(400).send({ error: 'Description parameter is required' });
+      }
+  
+      const draftId = await DraftsService.getDraftIdByDescription(description);
+  
+      return res.status(200).send({
+        msg: 'Draft ID retrieved successfully',
+        draftId,
+      });
+    } catch (error) {
+      return res.status(500).send({ error: error.message });
+    }
+};
+
+
+exports.getDraftById = async (req, res) => {
+    try {
+        const draftId = req.params.draftId;
+        if (!draftId) {
+            return res.status(400).send({ error: 'Draft ID parameter is required' });
+        }
+
+        const draft = await DraftsService.getDraftById(draftId);
+
+        return res.status(200).send({
+            msg: 'Draft retrieved successfully',
+            draft,
+        });
     } catch (error) {
         return res.status(500).send({ error: error.message });
     }

@@ -18,8 +18,7 @@ const articleschema = new Schema({
     },
     publisherId: {
         type: Schema.Types.ObjectId,
-        ref: 'publisher', 
-        required: true
+        ref: 'publisher'
     }
 });
 const articlemodel = model('article',articleschema);

@@ -1,1 +1,1 @@
-GET http://localhost:3001/drafts?publisherId=65615d083e76ec0fa9ffc66e
+GET http://localhost:3001/drafts/description/firstdraft
