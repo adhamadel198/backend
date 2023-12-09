@@ -1,1 +1,1 @@
-GET https://news-web-app.azurewebsites.net/article/user/adham
+GET http://localhost:3001/article/user/adham
