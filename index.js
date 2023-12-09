@@ -5,8 +5,9 @@ const cors = require('cors');
 const initialdbconnection = require('./config/db');
 
 const articlerouter = require('./routes/article');
-const publishersRouter = require('./routes/publisher')
-const draftsRouter = require('./routes/draft')
+const publishersRouter = require('./routes/publisher');
+const draftsRouter = require('./routes/draft');
+const userRoute = require("./routes/userRoute.js");
 
 dotenv.config({path: './config/.env',});
 
@@ -21,6 +22,7 @@ app.use(express.json());
 app.use('/article', articlerouter);
 app.use('/publishers', publishersRouter); 
 app.use('/drafts', draftsRouter);
+app.use("/api", userRoute);
 
 app.listen(port, async() => {
     console.log(`Now listening on port ${port}`);
