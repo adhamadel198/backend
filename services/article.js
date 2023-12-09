@@ -24,10 +24,15 @@ const getArticlesByPublisherId = async (publisherId) => {
     return await Article.find({ publisherId });
 };
 
+const getArticlesByUsername = async (username) => {
+    return await Article.find({ keyword: { $in:username} });
+};
+
 module.exports = {
     findAllArticles,
     getArticlesByKeyword,
     addNewArticle,
     getArticlesByTopic,
-    getArticlesByPublisherId
+    getArticlesByPublisherId,
+    getArticlesByUsername
 };

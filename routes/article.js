@@ -8,5 +8,6 @@ articlerouter.get('/:keyword', articlecontroller.getArticlesByKeyword);
 articlerouter.post('/', articlecontroller.addNewArticle);
 articlerouter.get('/user/:username', articlecontroller.getArticlesByUserTopics);
 articlerouter.route("/updateArticle").put(articlecontroller.updateArticle);
+articlerouter.get('/journalist/:username', articlecontroller.getArticlesByUsername);
 
 module.exports = articlerouter;

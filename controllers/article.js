@@ -112,6 +112,28 @@ const getArticlesByPublisherId = async (req, res) => {
     }
 };
 
+const getArticlesByUsername = async (req, res) => {
+    try {
+      const username = req.params.username;
+      console.log(username);
+      
+      const user = await userModel.findOne({ username });
+  
+      if (!user) {
+        return res.status(404).json({ error: 'User not found 1' });
+      }
+  
+      const userName = user.username;
+      console.log(userTopics);
+      
+      const articles = await articleservice.getArticlesByKeyword({ $in: userName });
+  
+      res.status(200).json({ articles });
+    } catch (error) {
+      console.error('Error retrieving articles by user username:', error);
+      res.status(500).json({ error: error.message });
+    }
+  };
 
 module.exports = {
     findAllArticles,
@@ -119,5 +141,6 @@ module.exports = {
     addNewArticle,
     getArticlesByUserTopics,
     updateArticle,
-    getArticlesByPublisherId
+    getArticlesByPublisherId,
+    getArticlesByUsername
 };
